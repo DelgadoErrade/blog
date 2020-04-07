@@ -16,8 +16,8 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('user_id')->unsigned;
-            $table->bigInteger('category_id')->unsigned;
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
 
             $table->string('name', 128);
             $table->string('slug', 128)->unique();  // URL amigable
@@ -31,12 +31,14 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             //Relation
+            
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                $table->foreign('category_id')->references('id')->on('categories')
+            $table->foreign('category_id')->references('id')->on('categories')
                 ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->onUpdate('cascade'); 
+             
         });
     }
 
